@@ -1,0 +1,61 @@
+{
+  "name": "trinity-strike-client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.11.7",
+    "@types/react": "^17.0.35",
+    "@types/react-dom": "^17.0.11",
+    "@types/react-is": "^17.0.3",
+    "concurrently": "^6.4.0",
+    "craco": "^0.0.3",
+    "craco-alias": "^3.0.1",
+    "honeycomb-grid": "^4.0.0-alpha.5",
+    "inversify": "^6.0.1",
+    "inversify-inject-decorators": "^3.1.0",
+    "inversify-react": "^1.0.0",
+    "phaser": "^3.55.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-is": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "reflect-metadata": "^0.1.13",
+    "socket.io-client": "^4.3.2",
+    "typescript": "^4.4.4",
+    "web-vitals": "^1.0.1"
+  },
+  "scripts": {
+    "⚙️ Developer": "",
+    "dev": "yarn start:dev",
+    "start:dev": "yarn concurrently 'yarn start'",
+    "start": "craco start",
+    "🔫Production": "",
+    "build": "craco build",
+    "🙀 Test": "",
+    "test": "craco test",
+    "🛠 Utils": "",
+    "eject": "craco eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
