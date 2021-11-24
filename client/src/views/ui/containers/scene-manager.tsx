@@ -3,7 +3,7 @@ import { useInjection } from 'inversify-react';
 
 import { Scene } from '@views/ui/components/game/scene';
 
-import { MAIN_TYPES } from '@constants';
+import { DI_TYPES } from '@constants';
 
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 }
 
 export const SceneManager: React.FC<Props> = ({ children }) => {
-    const gameService = useInjection<IGameService>(MAIN_TYPES.services.GameService);
+    const gameService = useInjection<IGameService>(DI_TYPES.services.GameService);
 
     const connectSceneToGame = useCallback((sceneName: string, scene: IGameScene) => {
         gameService.addScene(sceneName, scene);      

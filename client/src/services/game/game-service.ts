@@ -1,27 +1,35 @@
-import Phaser from 'phaser';
+import Phaser from "phaser";
 
 import { inject, injectable } from "inversify";
-import { MAIN_TYPES } from '@constants';
+import { DI_TYPES, FABRIC_TYPES } from "@constants";
 
 @injectable()
 export class GameService implements IGameService {
-    @inject(MAIN_TYPES.gameConfig) config!: IGameConfig;
+  @inject(DI_TYPES.gameConfig) config!: IGameConfig;
+  _game!: (game?: IGame) => IGame;
 
-    game!: Phaser.Game;
+  get game() {
+    return this._game();
+  }
 
-    addScene = (sceneName: string, scene: IGameScene) => {
-        console.log(this);
-        
-        // this.game.scene.add(sceneName, scene, true, { x: 400, y: 300 })
-    }
+  constructor(
+    @inject(FABRIC_TYPES.GameService.Game)
+    factoryGame: () => (value?: IGame) => IGame
+  ) {
+    this._game = factoryGame();
+  }
 
-    removeScene(sceneName: string) {
-        console.log(this);
-        
-        // this.game.scene.remove(sceneName)
-    }
+  addScene = (sceneName: string, scene: IGameScene) => {
+    console.log(this);
+      
+    this.game.scene.add(sceneName, scene, true, { x: 400, y: 300 });
+  };
 
-    init() {
-        this.game = new Phaser.Game(this.config);
-    }
+  removeScene(sceneName: string) {
+    this.game.scene.remove(sceneName);
+  }
+
+  init() {
+    this._game(new Phaser.Game(this.config));
+  }
 }

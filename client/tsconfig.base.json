@@ -1,8 +1,5 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "types": ["reflect-metadata"],
     "baseUrl": ".",
     "paths": {
       "@types": ["src/index.ts", "src/index.d.ts"],
@@ -17,8 +14,5 @@
       "@di": ["src/di.config.ts"],
       "@assets/*": ["src/assets/*"]
     },
-    "typeRoots": [
-      "src/@types"
-    ]
   }
 }

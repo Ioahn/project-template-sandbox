@@ -1,25 +1,21 @@
-import { Container } from 'inversify';
+import { Container } from "inversify";
 
-import { MAIN_TYPES } from '@constants';
-import { GameService } from '@services/game';
+import { DI_TYPES, FABRIC_TYPES } from "@constants";
+import { GameService } from "@services/game";
+import { memo } from "@utils/common";
 
-import { GameBaseConfig } from './game.config';
+import { GameBaseConfig } from "./game.config";
 
 const appContainer = new Container();
 
-appContainer.bind<IGameConfig>(MAIN_TYPES.gameConfig).toConstantValue(GameBaseConfig);
+appContainer
+  .bind<IGameConfig>(DI_TYPES.gameConfig)
+  .toConstantValue(GameBaseConfig);
+
+appContainer.bind<IGameService>(DI_TYPES.services.GameService).to(GameService);
 
 appContainer
-    .bind<IGameService>(MAIN_TYPES.services.GameService)
-    .to(GameService)
+  .bind<DI.Factory<IGame>>(FABRIC_TYPES.GameService.Game)
+  .toFactory<IGame, [], [IGame]>(() => () => memo((game: IGame) => game));
 
-appContainer.bind<Factory<IGameService>>(MAIN_TYPES.services.GameService)
-.toFactory<IGameService>((context) => () => (game: Phaser.Game) => {
-    const gameService = context.container.get<IGameService>(MAIN_TYPES.services.GameService);
-
-    gameService.game = game;
-
-    return gameService;
-})
-
-export { appContainer }; 
+export { appContainer };
