@@ -1,5 +1,0 @@
-export enum PRESENTER_EVENTS {
-    CANVAS_MOUNT,
-    COMPONENT_MOUNT,
-    ADD_SCENE
-}

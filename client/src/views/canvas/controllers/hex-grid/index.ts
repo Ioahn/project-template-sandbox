@@ -1,19 +1,45 @@
 import { DI_TYPES } from "@constants";
 import { lazyInject } from "@utils/di";
 import { GameScene } from "@utils/scene";
+import { GridView } from "@views/canvas/view/grid";
+import { Background } from "@views/canvas/view/bg";
 
-import pussycat from "@assets/i.jpeg";
+import map from "@assets/map.jpeg";
 
-export class Grid extends GameScene {
+export class GridController extends GameScene {
   @lazyInject(DI_TYPES.services.GridService) gridService!: IGridService;
   @lazyInject(DI_TYPES.services.GameService) gameService!: IGameService;
-  pussycat!: Phaser.GameObjects.Image;
+
+  views: Map<string, any> = new Map();
 
   preload() {
-    this.load.image("pussycat", pussycat);
+    this.load.image("map", map);
   }
 
   create(data: { x: number; y: number }) {
-    this.pussycat = this.add.image(data.x, data.y, "face");
+    this.createBackground();
+    this.createGrid();
   }
+
+  createGrid() {
+    this.views.set(
+      "grid",
+      new GridView(this, {
+        x: 0,
+        y: 0,
+        grid: this.gridService.getGrid(),
+      })
+    );
+  }
+
+  createBackground = () => {
+    this.views.set(
+      "bg",
+      new Background(this, {
+        x: this.cameras.main.width / 2,
+        y: this.cameras.main.height / 2,
+        image: "map",
+      })
+    );
+  };
 }

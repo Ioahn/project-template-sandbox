@@ -1,1 +1,1 @@
-export * from './lazyInject';
+export * from "./lazyInject";

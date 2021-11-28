@@ -1,15 +1,22 @@
 type MaybeNull<T> = T | null;
 type MaybeString<T> = T | string;
-
 type Optional<T> = {
-    [Keys in keyof T]?: T[Keys] 
-}
+  [Keys in keyof T]?: T[Keys];
+};
+
+type Primitive = number | string | boolean | Record<string, any>;
+
+type PrimitiveObject = Record<string, Primitive>;
 
 declare namespace DI {
-    interface Factory<T> implements import("inversify").interfaces.Factory<T> {}
+  import("inversify");
+  import { interfaces } from "inversify";
+
+  type IFactory<T> = interfaces.Factory<T>;
+  type IContext = interfaces.Context;
 }
 
 declare module "*.jpeg" {
-    const value: any;
-    export default value;
-  }
+  const value: any;
+  export default value;
+}

@@ -1,7 +1,9 @@
 import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import TsConfigPathResolverPlugin from "tsconfig-paths-webpack-plugin";
+import ProgressBarPlugin from "progress-bar-webpack-plugin";
 import { fileURLToPath } from "url";
+import chalk from "chalk";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -21,6 +23,7 @@ export default {
   },
   devtool: "inline-source-map",
   ignoreWarnings: [/Failed to parse source map/],
+  stats: "minimal",
   module: {
     rules: [
       {
@@ -46,6 +49,14 @@ export default {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(dirname, "public", "index.html"),
+    }),
+    new ProgressBarPlugin({
+      format:
+        "  build " +
+        chalk.yellow.bold(" [:bar] ") +
+        chalk.green.bold(":percent") +
+        " (:elapsed seconds)",
+      clear: false,
     }),
   ],
 };

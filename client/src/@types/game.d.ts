@@ -16,19 +16,43 @@ interface IGameSceneConstructor {
   new (config: string | ISceneConfig): IGameScene;
 }
 
-interface ILazyInit {
-  public init();
-}
+type ISceneOptions = {
+  autoStart?: boolean;
+  size: {
+    x: number;
+    y: number;
+  };
+};
 
-interface IGameService extends ILazyInit {
-  addScene(sceneName: string, scene: IGameScene);
+interface IGameService {
+  getScene(sceneName: string): IGameScene;
+  addScene(sceneName: string, scene: IGameScene, options: ISceneOptions);
   removeScene(sceneName: string);
-  get game(): IGame;
-  _game: (value: IGame) => IGame;
+  getGame: () => IGame;
 }
 
-interface IGridService {}
+interface IGameView<Props extends PrimitiveObject> {
+  props: Partial<Props>;
 
-interface IGridCell {}
+  public shouldUpdate(
+    newProps: Partial<Props>,
+    pastProps: Partial<Props>
+  ): boolean;
+
+  private setProps(newProps: Partial<Props>): void;
+}
+
+interface IGridService {
+  getGrid(): Grid.HexMap;
+}
+
+declare namespace Grid {
+  import("honeycomb-grid");
+
+  import { Grid, Hex } from "honeycomb-grid";
+
+  type GridMap = Grid<GridCell>;
+  type GridCell = Hex;
+}
 
 type ISceneConfig = Phaser.Types.Scenes.SettingsConfig;
